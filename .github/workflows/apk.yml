@@ -1,8 +1,9 @@
 name: Finanzas3 APK
 on:
-  push:
-    branches: [principal]
   workflow_dispatch:
+  push:
+    branches: [main]
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -17,19 +18,23 @@ jobs:
           node-version: '20'
       - name: Compilar APK
         run: |
-          rm -f capacitor.config.json paquete.json package.json package-lock.json
+          rm -rf android www node_modules
+          rm -f capacitor.config.json capacitor.config.ts paquete.json package.json package-lock.json
+          ls -la
           npm init -y
           npm install @capacitor/core @capacitor/cli @capacitor/android
           mkdir -p www
-          cp indice.html www/index.html
-          npx cap init Finanzas3 com.finanzas3.app --web-dir=www --npm-client npm
+          HTML=$(ls *.html 2>/dev/null | head -n 1)
+          if [ -z "$HTML" ]; then HTML=$(ls Finanzas3/*.html 2>/dev/null | head -n 1); fi
+          echo "Usando $HTML"
+          cp "$HTML" www/index.html
+          echo '{"appId":"com.finanzas3.app","appName":"Finanzas3","webDir":"www"}' > capacitor.config.json
           npx cap add android
           npx cap copy android
           cd android
           chmod +x gradlew
           ./gradlew assembleDebug
-      - name: Subir APK
-        uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v4
         with:
           name: Finanzas3-APK
           path: android/app/build/outputs/apk/debug/app-debug.apk
