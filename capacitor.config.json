@@ -1,0 +1,8 @@
+{
+  "appId": "com.finanzasfacil.app",
+  "appName": "Finanzas Fácil",
+  "webDir": "www",
+  "server": {
+    "androidScheme": "https"
+  }
+}
