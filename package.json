@@ -1,0 +1,14 @@
+{
+  "name": "finanzas-facil",
+  "version": "1.0.0",
+  "description": "Aplicación sencilla para controlar ingresos y gastos",
+  "private": true,
+  "scripts": {
+    "build": "echo Build completed"
+  },
+  "dependencies": {
+    "@capacitor/core": "^7.4.3",
+    "@capacitor/android": "^7.4.3",
+    "@capacitor/cli": "^7.4.3"
+  }
+}
